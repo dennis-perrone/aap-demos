@@ -1,4 +1,5 @@
 ---
+
 - name: Linux server patching
   hosts: "{{ _hosts | default(omit) }}"
   become: true
@@ -27,17 +28,17 @@
         - not ansible_check_mode
         - ansible_local.insights.system_id is defined
 
-        - name: Start firewalld
-          ansible.builtin.service:
-            name: firewalld
-            state: started
+    - name: Start firewalld
+      ansible.builtin.service:
+        name: firewalld
+        state: started
 
-        - name: Enable firewall http service
-          ansible.posix.firewalld:
-            service: '{{ item }}'
-            state: enabled
-            immediate: true
-            permanent: true
-          loop:
-            - http
-            - https
+    - name: Enable firewall http service
+      loop:
+        - http
+        - https
+      ansible.posix.firewalld:
+        service: '{{ item }}'
+        state: enabled
+        immediate: true
+        permanent: true
