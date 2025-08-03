@@ -23,10 +23,10 @@
         - ansible_local.insights.system_id is not defined
 
     - name: Run the Insights Client Scan  # noqa: no-changed-when
-      ansible.builtin.command: insights-client
       when:
         - not ansible_check_mode
         - ansible_local.insights.system_id is defined
+      ansible.builtin.command: insights-client
 
     - name: Start firewalld
       ansible.builtin.service:
